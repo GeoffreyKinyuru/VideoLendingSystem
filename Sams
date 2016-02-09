@@ -1,0 +1,59 @@
+package samsam;
+
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
+public class SamSam {
+
+    private static String hair;
+    private static String height;
+    private static String smile;
+
+    public SamSam() {
+
+        hair = JOptionPane.showInputDialog(null, "Enter hair color:");
+        height = JOptionPane.showInputDialog(null, "Enter height:");
+        smile = JOptionPane.showInputDialog(null, "Enter smile type");
+
+        try {
+
+            Connection sqlConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sam", "root", "");
+            //create a connection to the database
+            Statement sqlStatements = sqlConnection.createStatement();
+            String SELECT_QUERY = "SELECT * FROM someproperties;";
+            String INSERT_QUERY = "INSERT INTO someproperties VALUES('" + hair + "','" + height + "','" + smile + "');";
+            sqlStatements.execute(INSERT_QUERY);
+            //execute(QueryString) is called when you dont expect values from the server
+            //executeQuery() is called alongside ResultSt when you expect values from the server -- bith methhods are found in Statements class
+            System.err.println("Values enteered succefully");
+
+            ResultSet queryResults = sqlStatements.executeQuery(SELECT_QUERY);
+
+            while (queryResults.next()) {
+
+                System.out.println("Sam's Hair is now" + queryResults.getString("hair"));
+                System.out.println("Sam's height is now" + queryResults.getString("height"));
+                System.out.println("Sam's smile is now" + queryResults.getString("smile"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SERVER IS OFFLINE : \n" + e.getMessage());
+        }
+    }
+
+    public static void main(String[] args) {
+
+        javax.swing.SwingUtilities.invokeLater(
+                new Runnable() {
+            @Override
+            public void run() {
+
+                new SamSam();
+            }
+        });
+    }
+}
