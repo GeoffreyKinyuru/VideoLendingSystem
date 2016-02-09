@@ -1,0 +1,39 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package araycomplex;
+import java.util.*;
+/**
+ *
+ * @author GEOFREY
+ */
+public class ArayComplex {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        String i;
+     Scanner input=new Scanner(System.in);
+        String register[][]=new String[2][3];
+        System.out.println("Enter the following information please!");
+         System.out.println("RegistratioNo\tCadidateName\tbf");
+        for(int j=0;j<2;j++){
+            for(int r=0;r<3;r++)
+                  register[j][r]=input.nextLine();
+        }
+                    
+     display2(register);
+    }
+    public static void display2(String ara[][]){
+        for(int r=0;r<ara.length;r++){
+            for(int c=0;c<ara[r].length;c++){
+                System.out.print(ara[r][c]);
+            }
+            System.out.println();
+    }
+   
+    }
+}
